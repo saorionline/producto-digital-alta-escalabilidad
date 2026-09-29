@@ -11,6 +11,9 @@ class Marcas(models.Model):
         managed = False
         db_table = 'MARCAS'
 
+    def __str__(self):
+        return self.nombre
+
 class Modelos(models.Model):
     id = models.BigIntegerField(primary_key=True)
     marca = models.ForeignKey(Marcas, on_delete=models.DO_NOTHING)
@@ -22,6 +25,9 @@ class Modelos(models.Model):
         managed = False
         db_table = 'MODELOS'
 
+    def __str__(self):
+        return f'{self.marca} {self.nombre}'
+
 class EstadosVehiculo(models.Model):
     id = models.BigIntegerField(primary_key=True)
     nombre = models.CharField(unique=True, max_length=50)
@@ -30,6 +36,9 @@ class EstadosVehiculo(models.Model):
     class Meta:
         managed = False
         db_table = 'ESTADOS_VEHICULO'
+
+    def __str__(self):
+        return self.nombre
 
 class Vehiculos(models.Model):
     id = models.BigIntegerField(primary_key=True)
@@ -43,6 +52,9 @@ class Vehiculos(models.Model):
         managed = False
         db_table = 'VEHICULOS'
 
+    def __str__(self):
+        return f'{self.modelo} {self.anio_vehiculo} ({self.color})'
+
 class PreciosVehiculos(models.Model):
     id = models.BigIntegerField(primary_key=True)
     vehiculo = models.ForeignKey(Vehiculos, on_delete=models.DO_NOTHING)
@@ -54,3 +66,6 @@ class PreciosVehiculos(models.Model):
     class Meta:
         managed = False
         db_table = 'PRECIOS_VEHICULOS'
+
+    def __str__(self):
+        return f'{self.vehiculo} - ${self.precio:,.0f}'
